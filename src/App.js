@@ -8,6 +8,10 @@ const style = {
     margin: '50px auto'
 };
 
+const selectedDay = {
+    border: '1px solid #4285f4'
+};
+
 class App extends Component {
     onDayClick = (e, day) => {
         alert(day);
@@ -16,7 +20,14 @@ class App extends Component {
     render() {
         return (
             <div className='App'>
-                <Calendar style={style} width="302px" onDayClick={(e, day) => this.onDayClick(e, day)}/>
+                <div className="planner">
+                    <div className='planner-item'>
+                        <Calendar style={style} width="500px" onDayClick={(e, day) => this.onDayClick(e, day)}/>
+                    </div>
+                    <div className='planner-item'>
+                        <Calendar style={style} width="500px" onDayClick={(e, day) => this.onDayClick(e, day)}/>
+                    </div>
+                </div>
             </div>
         );
     }

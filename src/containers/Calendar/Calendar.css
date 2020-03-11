@@ -9,6 +9,8 @@ tr {
 
 .calendar-container {
     border: 2px solid skyblue;
+    width: 300px;
+    height: 250px;
 }
 
 .calendar {
@@ -20,11 +22,12 @@ tr {
 
 .calendar-header {
     border-bottom: 1px dashed skyblue;
+    position: relative;
 }
 
 .calendar-header td {
     border-spacing: 0;
-    padding-left: 5px;
+    padding: 5px;
 }
 
 .day,
@@ -57,28 +60,39 @@ tr {
 
 .month-popup {
     position: absolute;
+    top: 28px;
+    left: -1px;
     padding: 5px;
     background: white;
-    border: 2px solid skyblue;
+    border: 1px solid skyblue;
+}
+
+.popup-item {
+    color: black;
+    text-decoration: none;
+
 }
 
 .month-popup div {
     padding: 0.3em;
+    position: relative;
 }
 
 .nav-month {
     position: absolute;
-    top: 0.6em;
+    top: 0;
     font-size: 0.6em;
     right: 3px;
 }
 
 .prev {
-
+    font-size: 20px;
+    cursor: pointer;
 }
 
 .next {
-
+    font-size: 20px;
+    cursor: pointer;
 }
 
 .editor-year {
@@ -87,7 +101,8 @@ tr {
 
 .label-month,
 .label-year {
-    font-size: 0.6em;
+    font-size: 16px;
+    padding-right: 20px;
 }
 
 .label-month {

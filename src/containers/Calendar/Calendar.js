@@ -12,20 +12,18 @@ class Calendar extends Component {
 
     constructor(props) {
         super(props);
-        this.width = props.width || "350px";
         this.style = props.style || {};
-        this.style.width = this.width;
     }
 
 
-    weekdays = moment.weekdays();
+    // weekdays = moment.weekdays();
     weekdaysShort = moment.weekdaysShort();
     months = moment.months();
 
     year = () => this.state.momentContext.format('Y');
     month = () => this.state.momentContext.format('MMMM');
     daysInMonth = () => this.state.momentContext.daysInMonth();
-    currentDate = () => this.state.momentContext.get('date');
+    // currentDate = () => this.state.momentContext.get('date');
     currentDay = () => this.state.momentContext.format('D');
 
     firstDayOfMonth = () => {
@@ -63,7 +61,7 @@ class Calendar extends Component {
         let popup = props.data.map(item => {
             return (
                 <div key={item}>
-                    <a href="#" onClick={(e) => {
+                    <a href="#" className='popup-item' onClick={(e) => {
                         this.onSelectChange(e, item)
                     }}>
                         {item}
@@ -89,7 +87,6 @@ class Calendar extends Component {
             }}>
                 {this.month()}
                 {this.state.showMonthPopup && <this.SelectList data={this.months}/>}
-
             </span>
         )
     };
@@ -108,7 +105,7 @@ class Calendar extends Component {
 
     onYearChange = (e) => {
         this.setYear(e.target.value);
-        this.props.onChangeYear && this.props.onChangeYear(e, e.target.value);
+        this.props.onYearChange && this.props.onYearChange(e, e.target.value);
     };
 
     onKeyUpYear = (e) => {
@@ -157,7 +154,7 @@ class Calendar extends Component {
 
         let blanks = [];
         for (let i = 0; i < this.firstDayOfMonth(); i++) {
-            blanks.push(<td className='empty-slot'>
+            blanks.push(<td key={i*80} className='empty-slot'>
                 {''}
             </td>);
         }
@@ -230,8 +227,8 @@ class Calendar extends Component {
                     <tr>
                         {weekdays}
                     </tr>
-                    </tbody>
                     {days}
+                    </tbody>
                 </table>
             </div>
         );
