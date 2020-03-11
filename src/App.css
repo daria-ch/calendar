@@ -2,13 +2,6 @@
     text-align: center;
 }
 
-.planner {
-    display: flex;
-    margin: 50px auto;
-    max-width: 400px;
-    justify-content: space-between;
-    text-align: left;
-}
 
 
 @media (prefers-reduced-motion: no-preference) {

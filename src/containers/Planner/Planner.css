@@ -1,0 +1,21 @@
+.planner {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+}
+
+.planner-form {
+    margin: 50px auto;
+    max-width: 400px;
+    padding: 10px;
+    text-align: center;
+}
+
+.planner-button {
+    background: transparent;
+    border: 1px solid #000;
+    border-radius: 3px;
+    padding: 3px;
+    cursor: pointer;
+    margin-top: 20px;
+}
