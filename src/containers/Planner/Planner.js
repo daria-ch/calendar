@@ -3,6 +3,7 @@ import DatePicker from "../../components/DatePicker/DatePicker";
 import './Planner.css';
 import {addPeriod, getPeriods} from "../../store/actions/actions";
 import {connect} from "react-redux";
+import Scale from "../../components/Scale/Scale";
 
 class Planner extends Component {
 
@@ -51,11 +52,13 @@ class Planner extends Component {
             )
         });
         if (!this.props.periods) {
-            periods = <span></span>
+            periods = <span>
+                No periods found
+            </span>
         }
 
         return (
-            <Fragment>
+            <div style={{textAlign: 'center'}}>
                 <form className='planner-form' onSubmit={this.formOnSubmit}>
                     <div className='planner'>
                         <div className='planner-item'>
@@ -81,7 +84,8 @@ class Planner extends Component {
                 <div className='periods'>
                     {periods}
                 </div>
-            </Fragment>
+                <Scale/>
+            </div>
 
         );
     }

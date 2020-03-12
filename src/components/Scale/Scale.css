@@ -1,0 +1,35 @@
+.scale {
+    width: auto;
+    border: 1px solid #000;
+    margin: 0 auto;
+    height: 30px;
+    line-height: 30px;
+    display: inline-block;
+}
+
+.scale:first-child {
+    border-left: 1px solid #000;
+}
+
+.scale-item {
+    border-right: 1px solid #000;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.scale-item:first-child {
+    border-left: none;
+}
+
+.scale-item:last-child {
+    border-right: none;
+}
+
+.current-day {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    background-color: skyblue;
+}
