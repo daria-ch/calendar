@@ -1,25 +1,12 @@
 import React, {Component} from 'react';
+import nanoid from 'nanoid';
 import DatePicker from "../../components/DatePicker/DatePicker";
 import './Planner.css';
 import {addPeriod, getPeriods} from "../../store/actions/actions";
 import {connect} from "react-redux";
-import Gantt from "../../components/Gantt/Gantt";
-import Toolbar from "../../components/Toolbar";
-import MessageArea from "../../components/MessageArea/MessageArea";
 
-
-const data = {
-    data: [
-        {id: 1, text: 'Task #1', start_date: '15-04-2019', duration: 3, progress: 0.6},
-        {id: 2, text: 'Task #2', start_date: '18-04-2019', duration: 3, progress: 0.4}
-    ],
-    links: [
-        {id: 1, source: 1, target: 2, type: '0'}
-    ]
-};
 
 class Planner extends Component {
-
     state = {
         start: '',
         end: '',
@@ -27,39 +14,9 @@ class Planner extends Component {
         currentZoom: 'Days'
     };
 
-
-    handleZoomChange = (zoom) => {
-        this.setState({
-            currentZoom: zoom
-        });
-    };
-
     componentDidMount() {
         this.props.getPeriods();
     }
-
-    addMessage(message) {
-        const maxLogLength = 5;
-        const newMessage = {message};
-        const messages = [
-            newMessage,
-            ...this.state.messages
-        ];
-
-        if (messages.length > maxLogLength) {
-            messages.length = maxLogLength;
-        }
-        this.setState({messages});
-    }
-
-    logDataUpdate = (entityType, action, itemData, id) => {
-        let text = itemData && itemData.text ? ` (${itemData.text})` : '';
-        let message = `${entityType} ${action}: ${id} ${text}`;
-        if (entityType === 'link' && action !== 'delete') {
-            message += ` ( source: ${itemData.source}, target: ${itemData.target} )`;
-        }
-        this.addMessage(message);
-    };
 
     inputChangeHandler = (event) => {
         this.setState({[event.target.name]: event.target.value});
@@ -82,7 +39,8 @@ class Planner extends Component {
                 const period = {
                     start: this.state.start,
                     end: this.state.end,
-                    duration: days
+                    duration: days,
+                    text: '',
                 };
                 await this.props.addPeriod(period);
                 this.props.getPeriods();
@@ -91,25 +49,30 @@ class Planner extends Component {
     };
 
     render() {
+        const data = {
+            data: []
+        };
 
-        const {currentZoom, messages} = this.state;
-
-        let periods = this.props.periods;
-
-        if (!this.props.periods) {
-            periods = <span>
-                No periods found
-            </span>
-        }
-        periods = Object.keys(this.props.periods).reverse().map(period => {
-            return (
-                <div key={period} style={{border: '1px solid #000', padding: '5px', margin: '5px'}}>
-                    <span style={{marginRight: '10px'}}>Start: {this.props.periods[period].start}</span>
-                    <span style={{marginRight: '10px'}}>End: {this.props.periods[period].end}</span>
-                    <span>Duration: {this.props.periods[period].duration}</span>
-                </div>
-            )
+        Object.keys(this.props.periods).map(period => {
+            return data.data.push({
+                id: nanoid(3),
+                text: '',
+                start_date: this.props.periods[period].start,
+                duration: this.props.periods[period].duration,
+                progress: 0
+            })
         });
+
+
+        // periods = Object.keys(this.props.periods).reverse().map(period => {
+        //     return (
+        //         <div key={period} style={{border: '1px solid #000', padding: '5px', margin: '5px'}}>
+        //             <span style={{marginRight: '10px'}}>Start: {this.props.periods[period].start}</span>
+        //             <span style={{marginRight: '10px'}}>End: {this.props.periods[period].end}</span>
+        //             <span>Duration: {this.props.periods[period].duration}</span>
+        //         </div>
+        //     )
+        // });
 
 
         return (
@@ -136,25 +99,6 @@ class Planner extends Component {
                     </div>
                     <button className='planner-button' onClick={this.formOnSubmit}>Choose</button>
                 </form>
-                <div className='periods'>
-                    {periods}
-                </div>
-                <div>
-                    <Toolbar
-                        zoom={currentZoom}
-                        onZoomChange={this.handleZoomChange}
-                    />
-                    <div className="gantt-container">
-                        <Gantt
-                            tasks={data}
-                            zoom={currentZoom}
-                            onDataUpdated={this.logDataUpdate}
-                        />
-                    </div>
-                    <MessageArea
-                        messages={messages}
-                    />
-                </div>
             </div>
 
         );
